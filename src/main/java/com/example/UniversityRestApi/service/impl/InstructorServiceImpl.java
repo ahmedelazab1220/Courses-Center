@@ -15,6 +15,7 @@ import com.example.UniversityRestApi.repo.InstructorRepository;
 import com.example.UniversityRestApi.service.InstructorService;
 
 
+
 @Service
 public class InstructorServiceImpl implements InstructorService {
 
@@ -25,7 +26,7 @@ public class InstructorServiceImpl implements InstructorService {
 	public Instructor findById(int theId) {
 		Optional<Instructor> result = instructorRepository.findById(theId);
 		
-		Instructor theInstructor = null;
+		Instructor theInstructor;
 		
 		if(result.isPresent()) {
 			theInstructor = result.get();
@@ -43,7 +44,7 @@ public class InstructorServiceImpl implements InstructorService {
 		List<Instructor> instructors = instructorRepository.findAll();
 		
 		if(instructors.isEmpty()) {
-			throw new InstructorNotFoundException("There's No Instructors - 🥲!");
+			throw new InstructorNotFoundException("There's No Instructors!");
 		}
 		
 		return instructors;
@@ -78,16 +79,12 @@ public class InstructorServiceImpl implements InstructorService {
 		Instructor theInstructor = result.get();
 		
 		fields.forEach((key , val) ->{
-			
 			Field field = ReflectionUtils.findField(Instructor.class, key);
-		    field.setAccessible(true);
-			    
+            field.setAccessible(true);
 		    ReflectionUtils.setField(field, theInstructor, val);
-			
 		});
 		
-		instructorRepository.save(theInstructor);
-		
-		return theInstructor;
+		return instructorRepository.save(theInstructor);
 	}
+
 }

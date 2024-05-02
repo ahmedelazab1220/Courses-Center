@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.UniversityRestApi.dto.InstructorDTO;
-import com.example.UniversityRestApi.dto.Mapper;
+import com.example.UniversityRestApi.dto.SystemMapper;
 import com.example.UniversityRestApi.dto.creation.InstructorCreationDTO;
 import com.example.UniversityRestApi.entity.Instructor;
 import com.example.UniversityRestApi.service.impl.InstructorServiceImpl;
@@ -30,13 +30,13 @@ public class InstructorController {
 	private InstructorServiceImpl instructorService;
 	
 	@Autowired
-	private Mapper mapper;
+	private SystemMapper mapper;
 	
 	
 	@GetMapping("")
 	public ResponseEntity<List<InstructorDTO>> getAllInstructors(){
 		
-		List<InstructorDTO> instructorsDto = instructorService.findAll().stream().map(mapper::toInstructorDto).toList();
+		List<InstructorDTO> instructorsDto = instructorService.findAll().stream().map(mapper::instructorToInstructorDto).toList();
 		
 		return new ResponseEntity<>(instructorsDto , HttpStatus.ACCEPTED);
 	}
@@ -45,7 +45,7 @@ public class InstructorController {
 	@GetMapping("/{instructorId}")
 	public ResponseEntity<InstructorDTO> getInstructor(@PathVariable("instructorId") int instructorId){
 		
-        InstructorDTO instructorDto = mapper.toInstructorDto(instructorService.findById(instructorId));
+        InstructorDTO instructorDto = mapper.instructorToInstructorDto(instructorService.findById(instructorId));
 		
 		return new ResponseEntity<>(instructorDto , HttpStatus.ACCEPTED);
 	}
@@ -61,10 +61,8 @@ public class InstructorController {
 	@PostMapping("")
 	public ResponseEntity<?> addInstructor(@RequestBody InstructorCreationDTO instructorCreationDto) {
 		
-		Instructor theInstructor = mapper.toInstructor(instructorCreationDto);
-		
-		theInstructor.setId(0);
-		
+		Instructor theInstructor = mapper.instructorCreationToInstructor(instructorCreationDto);
+
 		instructorService.save(theInstructor);
 		
 		return new ResponseEntity<>("Data Saved" , HttpStatus.ACCEPTED);

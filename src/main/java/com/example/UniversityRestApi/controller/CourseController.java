@@ -1,26 +1,20 @@
 package com.example.UniversityRestApi.controller;
 
-import java.util.List;
-import java.util.Map;
+import com.example.UniversityRestApi.dto.CourseDTO;
+import com.example.UniversityRestApi.dto.SystemMapper;
+import com.example.UniversityRestApi.dto.creation.CourseCreationDTO;
+import com.example.UniversityRestApi.entity.Course;
+import com.example.UniversityRestApi.entity.Instructor;
+import com.example.UniversityRestApi.service.impl.CourseServiceImpl;
+import com.example.UniversityRestApi.service.impl.InstructorServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.UniversityRestApi.dto.CourseDTO;
-import com.example.UniversityRestApi.dto.Mapper;
-import com.example.UniversityRestApi.dto.creation.CourseCreationDTO;
-import com.example.UniversityRestApi.entity.Course;
-import com.example.UniversityRestApi.service.impl.CourseServiceImpl;
-import com.example.UniversityRestApi.service.impl.InstructorServiceImpl;
+import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -31,16 +25,15 @@ public class CourseController {
 	private CourseServiceImpl courseService;
 	
 	@Autowired
-	private Mapper mapper;
+    private SystemMapper mapper;
 	
 	@Autowired
 	private InstructorServiceImpl instructorService;
 	
-	
 	@GetMapping("")
 	public ResponseEntity<List<CourseDTO>> getAllCourses(){
 		
-        List<CourseDTO> coursesDto = courseService.findAll().stream().map(mapper::toCourseDTO).toList();
+        List<CourseDTO> coursesDto = courseService.findAll().stream().map(mapper::courseToCourseDto).toList();
 		
 		return new ResponseEntity<>(coursesDto , HttpStatus.ACCEPTED);
 	}
@@ -48,7 +41,9 @@ public class CourseController {
 	@GetMapping("/{courseId}")
 	public ResponseEntity<CourseDTO> getCourse(@PathVariable("courseId") int courseId){
 		
-		CourseDTO courseDto = mapper.toCourseDTO(courseService.findById(courseId));
+		Course theCourse = courseService.findById(courseId);
+
+		CourseDTO courseDto = mapper.courseToCourseDto(theCourse);
 		
 		return new ResponseEntity<>(courseDto , HttpStatus.ACCEPTED);
 	}
@@ -56,10 +51,11 @@ public class CourseController {
 	@PostMapping("/{instructorId}")
     public ResponseEntity<?> addCourse(@PathVariable("instructorId") int instructorId , @RequestBody CourseCreationDTO courseCreationDto){
 		
-        Course theCourse = mapper.toCourse(courseCreationDto);
-        theCourse.setTheInstructor(instructorService.findById(instructorId));
-        
-        theCourse.setId(0);
+        Instructor theInstrcutor =  instructorService.findById(instructorId);
+		
+        Course theCourse = mapper.courseCreationToCourse(courseCreationDto);
+           
+        theCourse.setTheInstructor(theInstrcutor);
         
         courseService.save(theCourse);
 		

@@ -7,14 +7,14 @@ import com.example.UniversityRestApi.entity.Course;
 
 public interface CourseService {
 
-    public Course findById(int theId);
+    Course findById(int theId);
 	
-	public List<Course> findAll();
+	List<Course> findAll();
 	
-	public void deleteById(int theId);
+	void deleteById(int theId);
 	
-	public void save(Course theCourse);
+	void save(Course theCourse);
 	
-	public Course update(int theId , Map<String, Object> fields);
+	Course update(int theId, Map<String, Object> fields);
 			
 }

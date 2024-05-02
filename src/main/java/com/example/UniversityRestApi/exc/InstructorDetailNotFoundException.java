@@ -1,9 +1,7 @@
 package com.example.UniversityRestApi.exc;
 
+@SuppressWarnings("serial")
 public class InstructorDetailNotFoundException extends RuntimeException {
-
-	private static final long serialVersionUID = 1L;
-
 	public InstructorDetailNotFoundException(String message, Throwable cause) {
 		super(message, cause);
 	}

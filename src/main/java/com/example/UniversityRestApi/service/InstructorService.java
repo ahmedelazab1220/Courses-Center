@@ -7,14 +7,14 @@ import com.example.UniversityRestApi.entity.Instructor;
 
 public interface InstructorService {
 	
-	public Instructor findById(int theId);
+	Instructor findById(int theId);
 	
-	public List<Instructor> findAll();
+	List<Instructor> findAll();
 	
-	public void deleteById(int theId);
+	void deleteById(int theId);
 	
-	public void save(Instructor theInstructor);
+	void save(Instructor theInstructor);
 	
-	public Instructor update(int theId , Map<String , Object> fields);
+	Instructor update(int theId , Map<String , Object> fields);
 	
 }

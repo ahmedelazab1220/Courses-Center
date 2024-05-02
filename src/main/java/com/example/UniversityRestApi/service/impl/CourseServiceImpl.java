@@ -24,7 +24,7 @@ public class CourseServiceImpl implements CourseService {
 	public Course findById(int theId) {
 		Optional<Course> result = courseRepository.findById(theId); 
 		
-		Course theCourse = null;
+		Course theCourse;
 		if(result.isPresent()) {
 			theCourse = result.get();
 		}
@@ -41,7 +41,7 @@ public class CourseServiceImpl implements CourseService {
 		List<Course> courses = courseRepository.findAll();
 		
 		if(courses.isEmpty()) {
-			throw new CourseNotFoundException("There's No Courses - 🥲!");
+			throw new CourseNotFoundException("There's No Courses!");
 		}
 		
 		return courses;

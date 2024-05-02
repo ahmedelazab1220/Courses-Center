@@ -11,16 +11,16 @@ import com.example.UniversityRestApi.exc.ErrorResponse;
 public class RestExceptionHandler {
 
 	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(Exception exc){
-		
+	public ResponseEntity<ErrorResponse> handleException(Exception exc) {
+
 		ErrorResponse error = new ErrorResponse();
-				
+
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		error.setMessage(exc.getMessage());
 		error.setTimeStamp(System.currentTimeMillis());
-				
-		return new ResponseEntity<>(error , HttpStatus.BAD_REQUEST);
-			
+
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+
 	}
-	
+
 }

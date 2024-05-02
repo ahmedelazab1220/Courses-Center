@@ -11,5 +11,5 @@ import com.example.UniversityRestApi.entity.Course;
 public interface CourseRepository extends JpaRepository<Course, Integer> {
 
 	Optional<Course> findByCourseName(String courseName);
-	
+
 }

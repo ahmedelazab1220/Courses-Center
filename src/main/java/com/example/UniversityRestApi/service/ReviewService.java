@@ -4,12 +4,12 @@ import com.example.UniversityRestApi.entity.Review;
 
 public interface ReviewService {
 
-	void save(int theId , Review theReview);
-	
+	void save(int theId, Review theReview);
+
 	void deleteById(int theId);
-	
-	Review update(int theId , Review theReview);
-	
+
+	Review update(int theId, Review theReview);
+
 	Review findById(int theId);
-	
+
 }

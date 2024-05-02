@@ -14,76 +14,73 @@ import com.example.UniversityRestApi.exc.InstructorNotFoundException;
 import com.example.UniversityRestApi.repo.InstructorRepository;
 import com.example.UniversityRestApi.service.InstructorService;
 
-
-
 @Service
 public class InstructorServiceImpl implements InstructorService {
 
 	@Autowired
 	private InstructorRepository instructorRepository;
-		
+
 	@Override
 	public Instructor findById(int theId) {
 		Optional<Instructor> result = instructorRepository.findById(theId);
-		
+
 		Instructor theInstructor;
-		
-		if(result.isPresent()) {
+
+		if (result.isPresent()) {
 			theInstructor = result.get();
-		}
-		else {
+		} else {
 			throw new InstructorNotFoundException("Instructor Not Found!");
 		}
-		
+
 		return theInstructor;
 	}
 
 	@Override
 	public List<Instructor> findAll() {
-		
+
 		List<Instructor> instructors = instructorRepository.findAll();
-		
-		if(instructors.isEmpty()) {
+
+		if (instructors.isEmpty()) {
 			throw new InstructorNotFoundException("There's No Instructors!");
 		}
-		
+
 		return instructors;
 	}
 
 	@Override
 	public void deleteById(int theId) {
-		
-        Optional<Instructor> result = instructorRepository.findById(theId);
-			
-		if(result.isEmpty()) {
+
+		Optional<Instructor> result = instructorRepository.findById(theId);
+
+		if (result.isEmpty()) {
 			throw new InstructorNotFoundException("Instructor Not Found!");
 		}
-		
+
 		instructorRepository.deleteById(theId);
 	}
 
 	@Override
 	public void save(Instructor theInstructor) {
-        instructorRepository.save(theInstructor);
+		instructorRepository.save(theInstructor);
 	}
 
 	@Override
 	public Instructor update(int theId, Map<String, Object> fields) {
-		 
+
 		Optional<Instructor> result = instructorRepository.findById(theId);
-			
-		if(result.isEmpty()) {
+
+		if (result.isEmpty()) {
 			throw new InstructorNotFoundException("Instructor Not Found!");
 		}
-				
+
 		Instructor theInstructor = result.get();
-		
-		fields.forEach((key , val) ->{
+
+		fields.forEach((key, val) -> {
 			Field field = ReflectionUtils.findField(Instructor.class, key);
-            field.setAccessible(true);
-		    ReflectionUtils.setField(field, theInstructor, val);
+			field.setAccessible(true);
+			ReflectionUtils.setField(field, theInstructor, val);
 		});
-		
+
 		return instructorRepository.save(theInstructor);
 	}
 

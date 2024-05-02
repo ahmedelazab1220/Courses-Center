@@ -25,7 +25,7 @@ public class Course {
 	@Column(name = "price")
 	@NotNull(message = "Price Course Is Required")
 	private int price;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	@JsonIgnore
@@ -35,12 +35,13 @@ public class Course {
 	@NotNull(message = "Publication Date Is Required")
 	private LocalDate publicationDate;
 
-	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+	@ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
 	@JoinColumn(name = "instructor_id")
 	@JsonBackReference
 	private Instructor theInstructor;
-	
-	@ManyToMany(cascade= {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch=FetchType.LAZY , mappedBy = "courses")
+
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "courses")
 	@JsonIgnore
 	private List<Student> students;
 
@@ -48,7 +49,6 @@ public class Course {
 			@NotNull(message = "Price Course Is Required") int price, List<Review> reviews,
 			@NotNull(message = "Publication Date Is Required") LocalDate publicationDate, Instructor theInstructor,
 			List<Student> students) {
-		super();
 		this.id = id;
 		this.courseName = courseName;
 		this.price = price;
@@ -59,7 +59,7 @@ public class Course {
 	}
 
 	public Course() {
-		
+
 	}
 
 	public int getId() {
@@ -109,7 +109,7 @@ public class Course {
 	public void setStudents(List<Student> students) {
 		this.students = students;
 	}
-	
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
@@ -124,5 +124,5 @@ public class Course {
 				+ ", publicationDate=" + publicationDate + ", theInstructor=" + theInstructor + ", students=" + students
 				+ "]";
 	}
-	
+
 }

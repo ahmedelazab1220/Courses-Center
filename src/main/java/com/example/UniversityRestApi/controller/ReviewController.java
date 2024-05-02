@@ -20,41 +20,42 @@ import com.example.UniversityRestApi.service.impl.ReviewServiceImpl;
 @RequestMapping("api/v4/reviews")
 public class ReviewController {
 
-	@Autowired 
+	@Autowired
 	private ReviewServiceImpl reviewService;
-	
+
 	@Autowired
 	private SystemMapper mapper;
-	
+
 	@PostMapping("/{courseId}")
-	public ResponseEntity<?> addReview(@PathVariable("courseId") int courseId , @RequestBody ReviewDTO reviewDto){
-		reviewService.save(courseId , mapper.toReview(reviewDto));
-		
-		return new ResponseEntity<>("Review Added" , HttpStatus.ACCEPTED);
+	public ResponseEntity<?> addReview(@PathVariable("courseId") int courseId, @RequestBody ReviewDTO reviewDto) {
+		reviewService.save(courseId, mapper.toReview(reviewDto));
+
+		return new ResponseEntity<>("Review Added", HttpStatus.ACCEPTED);
 	}
-	
+
 	@PutMapping("/{reviewId}")
-	public ResponseEntity<ReviewDTO> updateReview(@PathVariable("reviewId") int reviewId ,  @RequestBody ReviewDTO reviewDto){
-		
+	public ResponseEntity<ReviewDTO> updateReview(@PathVariable("reviewId") int reviewId,
+			@RequestBody ReviewDTO reviewDto) {
+
 		ReviewDTO review = mapper.toReviewDto(reviewService.update(reviewId, mapper.toReview(reviewDto)));
-		
-		return new ResponseEntity<>(review , HttpStatus.ACCEPTED);
+
+		return new ResponseEntity<>(review, HttpStatus.ACCEPTED);
 	}
-	
+
 	@DeleteMapping("/{reviewId}")
-	public ResponseEntity<?> deleteReview(@PathVariable("reviewId") int reviewId){
-		
+	public ResponseEntity<?> deleteReview(@PathVariable("reviewId") int reviewId) {
+
 		reviewService.deleteById(reviewId);
-		
-		return new ResponseEntity<>("Success Delete Review" , HttpStatus.ACCEPTED);
+
+		return new ResponseEntity<>("Success Delete Review", HttpStatus.ACCEPTED);
 	}
-	
+
 	@GetMapping("/{reviewId}")
-    public ResponseEntity<ReviewDTO> getReview(@PathVariable("reviewId") int reviewId){
-		
+	public ResponseEntity<ReviewDTO> getReview(@PathVariable("reviewId") int reviewId) {
+
 		ReviewDTO review = mapper.toReviewDto(reviewService.findById(reviewId));
-		
-		return new ResponseEntity<>(review , HttpStatus.ACCEPTED);
+
+		return new ResponseEntity<>(review, HttpStatus.ACCEPTED);
 	}
-	
+
 }

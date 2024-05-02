@@ -11,5 +11,5 @@ import com.example.UniversityRestApi.entity.Student;
 public interface StudentRepository extends JpaRepository<Student, Integer> {
 
 	Optional<Student> findByEmail(String email);
-	
+
 }

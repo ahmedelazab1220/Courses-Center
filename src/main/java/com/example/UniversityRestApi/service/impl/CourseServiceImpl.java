@@ -18,71 +18,70 @@ import com.example.UniversityRestApi.service.CourseService;
 public class CourseServiceImpl implements CourseService {
 
 	@Autowired
-	private CourseRepository courseRepository; 
-	
+	private CourseRepository courseRepository;
+
 	@Override
 	public Course findById(int theId) {
-		Optional<Course> result = courseRepository.findById(theId); 
-		
+		Optional<Course> result = courseRepository.findById(theId);
+
 		Course theCourse;
-		if(result.isPresent()) {
+		if (result.isPresent()) {
 			theCourse = result.get();
-		}
-		else {
+		} else {
 			throw new CourseNotFoundException("Course Not Found!");
 		}
-	
+
 		return theCourse;
 	}
 
 	@Override
 	public List<Course> findAll() {
-		
+
 		List<Course> courses = courseRepository.findAll();
-		
-		if(courses.isEmpty()) {
+
+		if (courses.isEmpty()) {
 			throw new CourseNotFoundException("There's No Courses!");
 		}
-		
+
 		return courses;
 	}
 
 	@Override
 	public void deleteById(int theId) {
-        Optional<Course> result = courseRepository.findById(theId); 
-		
-		if(result.isEmpty()) {
+		Optional<Course> result = courseRepository.findById(theId);
+
+		if (result.isEmpty()) {
 			throw new CourseNotFoundException("Course Not Found!");
 		}
-		
+
 		courseRepository.deleteById(theId);
 	}
 
 	@Override
 	public void save(Course theCourse) {
-       courseRepository.save(theCourse);
+		courseRepository.save(theCourse);
 	}
 
 	@Override
-	public Course update(int theId , Map<String, Object> fields) {
-        
-		Optional<Course> result = courseRepository.findById(theId); 
-		
-		if(result.isEmpty()) {
+	public Course update(int theId, Map<String, Object> fields) {
+
+		Optional<Course> result = courseRepository.findById(theId);
+
+		if (result.isEmpty()) {
 			throw new CourseNotFoundException("Course Not Found!");
 		}
-		
+
 		Course theCourse = result.get();
-		
-		fields.forEach((key , value) ->{
-		    Field field = ReflectionUtils.findRequiredField(Course.class, key);
-		    field.setAccessible(true);
-		    ReflectionUtils.setField(field, theCourse, value);
+
+		fields.forEach((key, value) -> {
+			Field field = ReflectionUtils.findRequiredField(Course.class, key);
+			field.setAccessible(true);
+			ReflectionUtils.setField(field, theCourse, value);
 		});
-		
+
 		courseRepository.save(theCourse);
-		
+
 		return theCourse;
 	}
-	
+
 }

@@ -19,63 +19,62 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Autowired
 	private ReviewRepository reviewRepository;
-	
+
 	@Autowired
 	private CourseRepository courseRepository;
-	
-	
+
 	@Override
 	public Review findById(int theId) {
 		Optional<Review> result = reviewRepository.findById(theId);
-		
-		if(result.isEmpty()){
+
+		if (result.isEmpty()) {
 			throw new ReviewNotFoundException("Review Not Found!");
 		}
-		
+
 		return reviewRepository.findById(theId).get();
 	}
-	
+
 	@Override
-	public void save(int theId , Review theReview) {
-		
+	public void save(int theId, Review theReview) {
+
 		Optional<Course> result = courseRepository.findById(theId);
-		
-		if(result.isEmpty()) {
+
+		if (result.isEmpty()) {
 			throw new CourseNotFoundException("Course Not Found!");
 		}
-        
+
 		List<Review> reviews = null;
-		
+
 		reviews = result.get().getReviews();
-		
+
 		reviews.add(theReview);
-		
+
 		result.get().setReviews(reviews);
-		
+
 		courseRepository.save(result.get());
 	}
 
 	@Override
 	public void deleteById(int theId) {
 		Optional<Review> result = reviewRepository.findById(theId);
-		
-		if(result.isEmpty()){
+
+		if (result.isEmpty()) {
 			throw new ReviewNotFoundException("Review Not Found!");
 		}
-		
+
 		reviewRepository.deleteById(theId);
 	}
 
 	@Override
-	public Review update(int theId , Review theReview) {
-        Optional<Review> result = reviewRepository.findById(theId);
-		
-		if(result.isEmpty()){
+	public Review update(int theId, Review theReview) {
+		Optional<Review> result = reviewRepository.findById(theId);
+
+		if (result.isEmpty()) {
 			throw new ReviewNotFoundException("Review Not Found!");
 		}
-		
+
 		result.get().setComment(theReview.getComment());
-		
+
 		return reviewRepository.save(result.get());
 	}
 

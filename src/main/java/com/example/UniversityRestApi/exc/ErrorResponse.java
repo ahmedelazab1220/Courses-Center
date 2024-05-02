@@ -5,13 +5,13 @@ public class ErrorResponse {
 	private int status;
 
 	private String message;
-	
+
 	private long timeStamp;
-	
+
 	public ErrorResponse() {
-		
+
 	}
-	
+
 	public ErrorResponse(int status, String message, long timeStamp) {
 		this.status = status;
 		this.message = message;
@@ -41,5 +41,5 @@ public class ErrorResponse {
 	public void setTimeStamp(long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
+
 }

@@ -13,5 +13,5 @@ public class InstructorDetailNotFoundException extends RuntimeException {
 	public InstructorDetailNotFoundException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }

@@ -11,5 +11,5 @@ import com.example.UniversityRestApi.entity.Instructor;
 public interface InstructorRepository extends JpaRepository<Instructor, Integer> {
 
 	Optional<Instructor> findByEmail(String email);
-	
+
 }

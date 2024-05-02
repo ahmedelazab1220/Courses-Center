@@ -2,7 +2,6 @@ package com.example.UniversityRestApi.entity;
 
 import java.util.List;
 
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,55 +17,50 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-@Table(name="student")
+@Table(name = "student")
 public class Student {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="first_name")
+
+	@Column(name = "first_name")
 	@NotNull(message = "First Name Is Required")
 	private String firstName;
-	
-	@Column(name="last_name")
+
+	@Column(name = "last_name")
 	private String lastName;
-	
+
 	@Column(name = "email", unique = true)
-	@Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9._]{0,24}@gmail\\.com$",
-			message = "use characters from a to z , A to Z , numbers from 0 to 9 , and special characters (. , _) only allowed")
+	@Pattern(regexp = "^[a-zA-Z][a-zA-Z0-9._]{0,24}@gmail\\.com$", message = "use characters from a to z , A to Z , numbers from 0 to 9 , and special characters (. , _) only allowed")
 	@NotNull(message = "Email Is Required")
 	private String email;
 
 	@Column(name = "phoneNumber")
-	@Pattern(regexp = "^01[012][0-9]{8}$",
-			message = "use an egyptian number to log in")
+	@Pattern(regexp = "^01[012][0-9]{8}$", message = "use an egyptian number to log in")
 	@NotNull(message = "PhoneNumber Is Required")
 	private String phoneNumber;
-	
+
 	@Column(name = "account_linkedin")
-	@Pattern(regexp = "https?:\\/\\/(?:www\\.)?linkedin\\.com\\/(?:in|pub)\\/[a-zA-Z0-9-]+",
-			message = "LinkedIn Link Not Valid")
+	@Pattern(regexp = "https?:\\/\\/(?:www\\.)?linkedin\\.com\\/(?:in|pub)\\/[a-zA-Z0-9-]+", message = "LinkedIn Link Not Valid")
 	private String linkedin;
 
 	@Column(name = "account_facebook")
-	@Pattern(regexp = "https?:\\/\\/(?:www\\.)?facebook\\.com\\/(?:profile\\.php\\?id=)?(?:[a-zA-Z0-9.-]+)",
-			message = "FaceBook Link Not Valid")
+	@Pattern(regexp = "https?:\\/\\/(?:www\\.)?facebook\\.com\\/(?:profile\\.php\\?id=)?(?:[a-zA-Z0-9.-]+)", message = "FaceBook Link Not Valid")
 	private String facebook;
 
 	@Column(name = "account_github")
-	@Pattern(regexp = "https?:\\/\\/(?:www\\.)?github\\.com\\/[a-zA-Z0-9-]+",
-			message = "Github Link Not Valid")
+	@Pattern(regexp = "https?:\\/\\/(?:www\\.)?github\\.com\\/[a-zA-Z0-9-]+", message = "Github Link Not Valid")
 	private String github;
-	
-	@ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH} , 
-			    fetch = FetchType.LAZY)
-	@JoinTable(name="course_student" , joinColumns =@JoinColumn(name="student_id"),inverseJoinColumns = @JoinColumn(name="course_id"))
+
+	@ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY)
+	@JoinTable(name = "course_student", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses;
 
 	public Student() {
-		
+
 	}
 
 	public Student(int id, @NotNull(message = "First Name Is Required") String firstName, String lastName,
@@ -158,5 +152,5 @@ public class Student {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
-   	
+
 }

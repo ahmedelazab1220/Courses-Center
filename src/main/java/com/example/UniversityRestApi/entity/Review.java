@@ -15,12 +15,12 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
-	@Column(name="comment")
+
+	@Column(name = "comment")
 	private String comment;
-	
+
 	public Review() {
-		
+
 	}
 
 	public Review(String comment) {
@@ -48,5 +48,5 @@ public class Review {
 	public String toString() {
 		return "Review [id=" + id + ", comment=" + comment + "]";
 	}
-	
+
 }

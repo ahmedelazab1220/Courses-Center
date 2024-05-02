@@ -13,20 +13,20 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface SystemMapper {
 
-    CourseDTO courseToCourseDto(Course theCourse);
+	CourseDTO courseToCourseDto(Course theCourse);
 
-    Course courseCreationToCourse(CourseCreationDTO courseCreationDto);
+	Course courseCreationToCourse(CourseCreationDTO courseCreationDto);
 
-    InstructorDTO instructorToInstructorDto(Instructor theInstructor);
+	InstructorDTO instructorToInstructorDto(Instructor theInstructor);
 
-    Instructor instructorCreationToInstructor(InstructorCreationDTO instructorCreationDto);
-        
-    StudentDTO studentToStudentDto(Student theStudent);
-    
-    Student studentCreationToStudent(StudentCreationDTO studentCreationDto);
-    
-    ReviewDTO toReviewDto(Review theReview);
-    
-    Review toReview(ReviewDTO reviewDto);
-    
+	Instructor instructorCreationToInstructor(InstructorCreationDTO instructorCreationDto);
+
+	StudentDTO studentToStudentDto(Student theStudent);
+
+	Student studentCreationToStudent(StudentCreationDTO studentCreationDto);
+
+	ReviewDTO toReviewDto(Review theReview);
+
+	Review toReview(ReviewDTO reviewDto);
+
 }

@@ -14,5 +14,5 @@ public class CourseNotFoundException extends RuntimeException {
 	public CourseNotFoundException(Throwable cause) {
 		super(cause);
 	}
-	
+
 }
